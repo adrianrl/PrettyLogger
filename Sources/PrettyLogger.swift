@@ -71,7 +71,7 @@ public class PrettyLogger {
 
         logWithPrivacy(
             logger: createLogger(for: category),
-            level: .default,
+            level: .error,
             prettyLoggerLevel: .warn,
             message: message,
             privacy: privacy,
