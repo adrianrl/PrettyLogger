@@ -5,6 +5,26 @@ import XCTest
 
 class LegacyOutputTests: XCTestCase {
     var cancellables = Set<AnyCancellable>()
+    private var originalSeparator: String!
+    private var originalTerminator: String!
+    private var originalLevel: PrettyLoggerLevel!
+
+    override func setUp() {
+        super.setUp()
+        // Save original state
+        originalSeparator = PrettyLogger.shared.separator
+        originalTerminator = PrettyLogger.shared.terminator
+        originalLevel = PrettyLogger.shared.level
+    }
+
+    override func tearDown() {
+        // Restore original state
+        PrettyLogger.shared.separator = originalSeparator
+        PrettyLogger.shared.terminator = originalTerminator
+        PrettyLogger.shared.level = originalLevel
+        cancellables.removeAll()
+        super.tearDown()
+    }
 
     func testLegacyOutputText() {
         PrettyLogger.shared.level = .info

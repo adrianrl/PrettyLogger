@@ -5,14 +5,28 @@ import XCTest
 
 class QuickOutputTest: XCTestCase {
     var cancellables = Set<AnyCancellable>()
+    private var originalLevel: PrettyLoggerLevel!
+    private var originalSeparator: String!
+    private var originalTerminator: String!
 
     override func setUp() {
         super.setUp()
         cancellables.removeAll()
+
+        // Save original state
+        originalLevel = PrettyLogger.shared.level
+        originalSeparator = PrettyLogger.shared.separator
+        originalTerminator = PrettyLogger.shared.terminator
+
+        // Reset to default state for tests
         PrettyLogger.shared.level = .all
     }
 
     override func tearDown() {
+        // Restore original state
+        PrettyLogger.shared.level = originalLevel
+        PrettyLogger.shared.separator = originalSeparator
+        PrettyLogger.shared.terminator = originalTerminator
         cancellables.removeAll()
         super.tearDown()
     }
@@ -43,19 +57,17 @@ class QuickOutputTest: XCTestCase {
         // Check first output (basic)
         XCTAssertEqual(receivedOutputs[0].level, .info)
         XCTAssertEqual(receivedOutputs[0].message, "Test message 1")
-        XCTAssertNil(receivedOutputs[0].file)  // OSLog API doesn't provide file info
-        XCTAssertNil(receivedOutputs[0].line)  // OSLog API doesn't provide line info
-        XCTAssertNil(receivedOutputs[0].formatted)  // OSLog API doesn't provide formatted string
+        XCTAssertEqual(receivedOutputs[0].file, "QuickOutputTest.swift")
 
         // Check second output (with category)
         XCTAssertEqual(receivedOutputs[1].level, .error)
         XCTAssertEqual(receivedOutputs[1].message, "Test error message")
-        XCTAssertNil(receivedOutputs[1].file)
+        XCTAssertEqual(receivedOutputs[1].file, "QuickOutputTest.swift")
 
         // Check third output (with category and privacy)
         XCTAssertEqual(receivedOutputs[2].level, .debug)
         XCTAssertEqual(receivedOutputs[2].message, "Test debug message")
-        XCTAssertNil(receivedOutputs[2].file)
+        XCTAssertEqual(receivedOutputs[2].file, "QuickOutputTest.swift")
     }
 
     func testLegacyOutputStreamStillWorks() {
@@ -117,10 +129,9 @@ class QuickOutputTest: XCTestCase {
 
         XCTAssertEqual(receivedOutputs.count, 4)
 
-        // OSLog outputs have nil file/line, legacy outputs have them
-        XCTAssertNil(receivedOutputs[0].file)  // OSLog
+        XCTAssertNotNil(receivedOutputs[0].file)  // OSLog
         XCTAssertNotNil(receivedOutputs[1].file)  // Legacy
-        XCTAssertNil(receivedOutputs[2].file)  // OSLog
+        XCTAssertNotNil(receivedOutputs[2].file)  // OSLog
         XCTAssertNotNil(receivedOutputs[3].file)  // Legacy
     }
 

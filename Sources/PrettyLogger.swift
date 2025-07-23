@@ -18,88 +18,139 @@ public class PrettyLogger {
 
     // MARK: - Primary OSLog-based API
 
-    public func logFatal(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    internal func logFatal(
+        _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+        file: String, line: Int, column: Int, function: String
+    ) {
         // Check level filtering
         if level < .fatal {
             return
         }
 
-        let logger = createLogger(for: category)
-        logWithPrivacy(logger: logger, level: .fault, message: message, privacy: privacy)
-
-        // Send to output stream
-        let output = PrettyLoggerOutput(level: .fatal, message: message)
-        self.output.send(output)
+        logWithPrivacy(
+            logger: createLogger(for: category),
+            level: .fault,
+            prettyLoggerLevel: .fatal,
+            message: message,
+            privacy: privacy,
+            file: file,
+            line: line,
+            column: column,
+            function: function
+        )
     }
 
-    public func logError(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    internal func logError(
+        _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+        file: String, line: Int, column: Int, function: String
+    ) {
         if level < .error {
             return
         }
 
-        let logger = createLogger(for: category)
-        logWithPrivacy(logger: logger, level: .error, message: message, privacy: privacy)
-
-        // Send to output stream
-        let output = PrettyLoggerOutput(level: .error, message: message)
-        self.output.send(output)
+        logWithPrivacy(
+            logger: createLogger(for: category),
+            level: .error,
+            prettyLoggerLevel: .error,
+            message: message,
+            privacy: privacy,
+            file: file,
+            line: line,
+            column: column,
+            function: function
+        )
     }
 
-    public func logWarning(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    internal func logWarning(
+        _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+        file: String, line: Int, column: Int, function: String
+    ) {
         if level < .warn {
             return
         }
 
-        let logger = createLogger(for: category)
-        logWithPrivacy(logger: logger, level: .default, message: message, privacy: privacy)
-
-        // Send to output stream
-        let output = PrettyLoggerOutput(level: .warn, message: message)
-        self.output.send(output)
+        logWithPrivacy(
+            logger: createLogger(for: category),
+            level: .default,
+            prettyLoggerLevel: .warn,
+            message: message,
+            privacy: privacy,
+            file: file,
+            line: line,
+            column: column,
+            function: function
+        )
     }
 
-    public func logInfo(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    internal func logInfo(
+        _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+        file: String, line: Int, column: Int, function: String
+    ) {
         if level < .info {
             return
         }
 
-        let logger = createLogger(for: category)
-        logWithPrivacy(logger: logger, level: .info, message: message, privacy: privacy)
-
-        // Send to output stream
-        let output = PrettyLoggerOutput(level: .info, message: message)
-        self.output.send(output)
+        logWithPrivacy(
+            logger: createLogger(for: category),
+            level: .info,
+            prettyLoggerLevel: .info,
+            message: message,
+            privacy: privacy,
+            file: file,
+            line: line,
+            column: column,
+            function: function
+        )
     }
 
-    public func logDebug(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    internal func logDebug(
+        _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+        file: String, line: Int, column: Int, function: String
+    ) {
         if level < .debug {
             return
         }
 
-        let logger = createLogger(for: category)
-        logWithPrivacy(logger: logger, level: .debug, message: message, privacy: privacy)
-
-        // Send to output stream
-        let output = PrettyLoggerOutput(level: .debug, message: message)
-        self.output.send(output)
+        logWithPrivacy(
+            logger: createLogger(for: category),
+            level: .debug,
+            prettyLoggerLevel: .debug,
+            message: message,
+            privacy: privacy,
+            file: file,
+            line: line,
+            column: column,
+            function: function
+        )
     }
 
-    public func logTrace(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    internal func logTrace(
+        _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+        file: String, line: Int, column: Int, function: String
+    ) {
         if level < .trace {
             return
         }
 
-        let logger = createLogger(for: category)
-        logWithPrivacy(logger: logger, level: .debug, message: message, privacy: privacy)
-
-        // Send to output stream
-        let output = PrettyLoggerOutput(level: .trace, message: message)
-        self.output.send(output)
+        logWithPrivacy(
+            logger: createLogger(for: category),
+            level: .default,
+            prettyLoggerLevel: .trace,
+            message: message,
+            privacy: privacy,
+            file: file,
+            line: line,
+            column: column,
+            function: function
+        )
     }
 
     // MARK: - Legacy print-based API (internal)
 
-    internal func logFatalLegacy(_ items: [Any], separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
+    internal func logFatalLegacy(
+        _ items: [Any], separator: String? = nil, terminator: String? = nil, file: String,
+        line: Int, column: Int, function: String
+    ) -> String? {
         if level < .fatal {
             return nil
         }
@@ -108,7 +159,10 @@ public class PrettyLogger {
             line: line, column: column, function: function)
     }
 
-    internal func logErrorLegacy(_ items: [Any], separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
+    internal func logErrorLegacy(
+        _ items: [Any], separator: String? = nil, terminator: String? = nil, file: String,
+        line: Int, column: Int, function: String
+    ) -> String? {
         if level < .error {
             return nil
         }
@@ -117,7 +171,10 @@ public class PrettyLogger {
             line: line, column: column, function: function)
     }
 
-    internal func logWarningLegacy(_ items: [Any], separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
+    internal func logWarningLegacy(
+        _ items: [Any], separator: String? = nil, terminator: String? = nil, file: String,
+        line: Int, column: Int, function: String
+    ) -> String? {
         if level < .warn {
             return nil
         }
@@ -126,7 +183,10 @@ public class PrettyLogger {
             line: line, column: column, function: function)
     }
 
-    internal func logInfoLegacy(_ items: [Any], separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
+    internal func logInfoLegacy(
+        _ items: [Any], separator: String? = nil, terminator: String? = nil, file: String,
+        line: Int, column: Int, function: String
+    ) -> String? {
         if level < .info {
             return nil
         }
@@ -135,7 +195,10 @@ public class PrettyLogger {
             line: line, column: column, function: function)
     }
 
-    internal func logDebugLegacy(_ items: [Any], separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
+    internal func logDebugLegacy(
+        _ items: [Any], separator: String? = nil, terminator: String? = nil, file: String,
+        line: Int, column: Int, function: String
+    ) -> String? {
         if level < .debug {
             return nil
         }
@@ -144,7 +207,10 @@ public class PrettyLogger {
             line: line, column: column, function: function)
     }
 
-    internal func logTraceLegacy(_ items: [Any], separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
+    internal func logTraceLegacy(
+        _ items: [Any], separator: String? = nil, terminator: String? = nil, file: String,
+        line: Int, column: Int, function: String
+    ) -> String? {
         if level < .trace {
             return nil
         }
@@ -162,7 +228,8 @@ public class PrettyLogger {
     }
 
     private func logWithPrivacy(
-        logger: Logger, level: OSLogType, message: String, privacy: PrettyLoggerPrivacy
+        logger: Logger, level: OSLogType, prettyLoggerLevel: PrettyLoggerLevel, message: String,
+        privacy: PrettyLoggerPrivacy, file: String, line: Int, column: Int, function: String
     ) {
         switch privacy {
         case .auto:
@@ -172,6 +239,42 @@ public class PrettyLogger {
         case .private:
             logger.log(level: level, "\(message, privacy: .private)")
         }
+
+        sendOutput(
+            prettyLoggerLevel,
+            message: message,
+            file: file,
+            line: line,
+            column: column,
+            function: function
+        )
+    }
+
+    private func sendOutput(
+        _ logLevel: PrettyLoggerLevel, message: String, file: String, line: Int, column: Int,
+        function: String, date: Date = Date()
+    ) {
+        let stringToPrint = stringForCurrentStyle(
+            logLevel: logLevel,
+            message: message,
+            terminator: terminator,
+            file: file,
+            line: line,
+            column: column,
+            function: function,
+            date: date
+        )
+
+        output.send(
+            PrettyLoggerOutput(
+                level: logLevel,
+                message: message,
+                file: (file as NSString).lastPathComponent,
+                line: line,
+                column: column,
+                formatted: stringToPrint
+            )
+        )
     }
 
     private func log(

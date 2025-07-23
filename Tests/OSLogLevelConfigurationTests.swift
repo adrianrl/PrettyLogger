@@ -5,16 +5,28 @@ import XCTest
 
 class OSLogLevelConfigurationTests: XCTestCase {
     var cancellables = Set<AnyCancellable>()
+    private var originalLevel: PrettyLoggerLevel!
+    private var originalSeparator: String!
+    private var originalTerminator: String!
 
     override func setUp() {
         super.setUp()
         cancellables.removeAll()
 
-        // Reset to default state
+        // Save original state
+        originalLevel = PrettyLogger.shared.level
+        originalSeparator = PrettyLogger.shared.separator
+        originalTerminator = PrettyLogger.shared.terminator
+
+        // Reset to default state for tests
         PrettyLogger.shared.level = .all
     }
 
     override func tearDown() {
+        // Restore original state
+        PrettyLogger.shared.level = originalLevel
+        PrettyLogger.shared.separator = originalSeparator
+        PrettyLogger.shared.terminator = originalTerminator
         cancellables.removeAll()
         super.tearDown()
     }

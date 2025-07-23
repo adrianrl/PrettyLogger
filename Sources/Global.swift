@@ -2,28 +2,58 @@ import Foundation
 
 // MARK: - Primary OSLog-based API
 
-public func logFatal(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.logFatal(message, category: category, privacy: privacy)
+public func logFatal(
+    _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+    file: String = #file, line: Int = #line, column: Int = #column, function: String = #function
+) {
+    PrettyLogger.shared.logFatal(
+        message, category: category, privacy: privacy, file: file, line: line, column: column,
+        function: function)
 }
 
-public func logError(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.logError(message, category: category, privacy: privacy)
+public func logError(
+    _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+    file: String = #file, line: Int = #line, column: Int = #column, function: String = #function
+) {
+    PrettyLogger.shared.logError(
+        message, category: category, privacy: privacy, file: file, line: line, column: column,
+        function: function)
 }
 
-public func logWarning(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.logWarning(message, category: category, privacy: privacy)
+public func logWarning(
+    _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+    file: String = #file, line: Int = #line, column: Int = #column, function: String = #function
+) {
+    PrettyLogger.shared.logWarning(
+        message, category: category, privacy: privacy, file: file, line: line, column: column,
+        function: function)
 }
 
-public func logInfo(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.logInfo(message, category: category, privacy: privacy)
+public func logInfo(
+    _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+    file: String = #file, line: Int = #line, column: Int = #column, function: String = #function
+) {
+    PrettyLogger.shared.logInfo(
+        message, category: category, privacy: privacy, file: file, line: line, column: column,
+        function: function)
 }
 
-public func logDebug(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.logDebug(message, category: category, privacy: privacy)
+public func logDebug(
+    _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+    file: String = #file, line: Int = #line, column: Int = #column, function: String = #function
+) {
+    PrettyLogger.shared.logDebug(
+        message, category: category, privacy: privacy, file: file, line: line, column: column,
+        function: function)
 }
 
-public func logTrace(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.logTrace(message, category: category, privacy: privacy)
+public func logTrace(
+    _ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto,
+    file: String = #file, line: Int = #line, column: Int = #column, function: String = #function
+) {
+    PrettyLogger.shared.logTrace(
+        message, category: category, privacy: privacy, file: file, line: line, column: column,
+        function: function)
 }
 
 // MARK: - Legacy print-based API (deprecated)

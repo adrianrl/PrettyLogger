@@ -3,6 +3,26 @@ import XCTest
 @testable import PrettyLogger
 
 class LegacyLevelConfigurationTests: XCTestCase {
+    private var originalLevel: PrettyLoggerLevel!
+    private var originalSeparator: String!
+    private var originalTerminator: String!
+
+    override func setUp() {
+        super.setUp()
+        // Save original state
+        originalLevel = PrettyLogger.shared.level
+        originalSeparator = PrettyLogger.shared.separator
+        originalTerminator = PrettyLogger.shared.terminator
+    }
+
+    override func tearDown() {
+        // Restore original state
+        PrettyLogger.shared.level = originalLevel
+        PrettyLogger.shared.separator = originalSeparator
+        PrettyLogger.shared.terminator = originalTerminator
+        super.tearDown()
+    }
+
     func testLegacyLogOnAllLevels() {
         PrettyLogger.shared.level = .all
         XCTAssertNotNil(logFatal("fatal"))
