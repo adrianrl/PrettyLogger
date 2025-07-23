@@ -1,11 +1,12 @@
-import XCTest
 import Combine
+import XCTest
+
 @testable import PrettyLogger
 
-class OutputTests: XCTestCase {
+class LegacyOutputTests: XCTestCase {
     var cancellables = Set<AnyCancellable>()
 
-    func testOuputText() {
+    func testLegacyOutputText() {
         PrettyLogger.shared.level = .info
         PrettyLogger.shared.separator = " ❎ "
 
@@ -20,9 +21,9 @@ class OutputTests: XCTestCase {
                 expirationComplete.fulfill()
             }
             .store(in: &cancellables)
-        
+
         expectedOutput = logInfo("hola holita")
-                
+
         waitForExpectations(timeout: 10)
     }
 }

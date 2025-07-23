@@ -1,8 +1,9 @@
 import XCTest
+
 @testable import PrettyLogger
 
-class LevelConfigurationTests: XCTestCase {
-    func testLogOnAllLevels() {
+class LegacyLevelConfigurationTests: XCTestCase {
+    func testLegacyLogOnAllLevels() {
         PrettyLogger.shared.level = .all
         XCTAssertNotNil(logFatal("fatal"))
         XCTAssertNotNil(logError("error"))
@@ -12,7 +13,7 @@ class LevelConfigurationTests: XCTestCase {
         XCTAssertNotNil(logTrace("trace"))
     }
 
-    func testLogOnDisableLogger() {
+    func testLegacyLogOnDisableLogger() {
         PrettyLogger.shared.level = .disable
         XCTAssertNil(logFatal("fatal"))
         XCTAssertNil(logError("error"))
@@ -22,7 +23,7 @@ class LevelConfigurationTests: XCTestCase {
         XCTAssertNil(logTrace("trace"))
     }
 
-    func testLogOnFatalLevel() {
+    func testLegacyLogOnFatalLevel() {
         PrettyLogger.shared.level = .fatal
         XCTAssertNotNil(logFatal("fatal"))
         XCTAssertNil(logError("error"))
@@ -32,7 +33,7 @@ class LevelConfigurationTests: XCTestCase {
         XCTAssertNil(logTrace("trace"))
     }
 
-    func testLogOnErrorLevel() {
+    func testLegacyLogOnErrorLevel() {
         PrettyLogger.shared.level = .error
         XCTAssertNotNil(logFatal("fatal"))
         XCTAssertNotNil(logError("error"))
@@ -42,7 +43,7 @@ class LevelConfigurationTests: XCTestCase {
         XCTAssertNil(logTrace("trace"))
     }
 
-    func testLogOnWarnLevel() {
+    func testLegacyLogOnWarnLevel() {
         PrettyLogger.shared.level = .warn
         XCTAssertNotNil(logFatal("fatal"))
         XCTAssertNotNil(logError("error"))
@@ -52,7 +53,7 @@ class LevelConfigurationTests: XCTestCase {
         XCTAssertNil(logTrace("trace"))
     }
 
-    func testLogOnInfoLevel() {
+    func testLegacyLogOnInfoLevel() {
         PrettyLogger.shared.level = .info
         XCTAssertNotNil(logFatal("fatal"))
         XCTAssertNotNil(logError("error"))
@@ -62,7 +63,7 @@ class LevelConfigurationTests: XCTestCase {
         XCTAssertNil(logTrace("trace"))
     }
 
-    func testLogOnDebugLevel() {
+    func testLegacyLogOnDebugLevel() {
         PrettyLogger.shared.level = .debug
         XCTAssertNotNil(logFatal("fatal"))
         XCTAssertNotNil(logError("error"))
@@ -72,7 +73,7 @@ class LevelConfigurationTests: XCTestCase {
         XCTAssertNil(logTrace("trace"))
     }
 
-    func testLogOnTraceLevel() {
+    func testLegacyLogOnTraceLevel() {
         PrettyLogger.shared.level = .trace
         XCTAssertNotNil(logFatal("fatal"))
         XCTAssertNotNil(logError("error"))

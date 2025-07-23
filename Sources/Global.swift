@@ -1,69 +1,95 @@
 import Foundation
 
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
-public func fatal(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.fatal(message, category: category, privacy: privacy)
+// MARK: - Primary OSLog-based API
+
+public func logFatal(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    PrettyLogger.shared.logFatal(message, category: category, privacy: privacy)
 }
 
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
-public func error(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.error(message, category: category, privacy: privacy)
+public func logError(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    PrettyLogger.shared.logError(message, category: category, privacy: privacy)
 }
 
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
-public func warning(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.warning(message, category: category, privacy: privacy)
+public func logWarning(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    PrettyLogger.shared.logWarning(message, category: category, privacy: privacy)
 }
 
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
-public func info(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.info(message, category: category, privacy: privacy)
+public func logInfo(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    PrettyLogger.shared.logInfo(message, category: category, privacy: privacy)
 }
 
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
-public func debug(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.debug(message, category: category, privacy: privacy)
+public func logDebug(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    PrettyLogger.shared.logDebug(message, category: category, privacy: privacy)
 }
 
-@available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
-public func trace(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
-    PrettyLogger.shared.trace(message, category: category, privacy: privacy)
+public func logTrace(_ message: String, category: String? = nil, privacy: PrettyLoggerPrivacy = .auto) {
+    PrettyLogger.shared.logTrace(message, category: category, privacy: privacy)
 }
 
-// MARK: - Deprecations
+// MARK: - Legacy print-based API (deprecated)
 
-@available(*, deprecated, renamed: "fatal", message: "Use `fatal` to use the unified OS logger")
+@available(*, deprecated, message: "Use logFatal(_ message: String, category: String?, privacy: PrettyLoggerPrivacy) instead")
 @discardableResult
-public func logFatal(_ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
-    return PrettyLogger.shared.logFatal(items, separator: separator, terminator: terminator, file: file, line: line, column: column, function: function)
+public func logFatal(
+    _ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file,
+    line: Int = #line, column: Int = #column, function: String = #function
+) -> String? {
+    return PrettyLogger.shared.logFatalLegacy(
+        items, separator: separator, terminator: terminator, file: file, line: line, column: column,
+        function: function)
 }
 
-@available(*, deprecated, renamed: "error", message: "Use `error` to use the unified OS logger")
+@available(*, deprecated, message: "Use logError(_ message: String, category: String?, privacy: PrettyLoggerPrivacy) instead")
 @discardableResult
-public func logError(_ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
-    return PrettyLogger.shared.logError(items, separator: separator, terminator: terminator, file: file, line: line, column: column, function: function)
+public func logError(
+    _ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file,
+    line: Int = #line, column: Int = #column, function: String = #function
+) -> String? {
+    return PrettyLogger.shared.logErrorLegacy(
+        items, separator: separator, terminator: terminator, file: file, line: line, column: column,
+        function: function)
 }
 
-@available(*, deprecated, renamed: "warning", message: "Use `warning` to use the unified OS logger")
+@available(*, deprecated, message: "Use logWarning(_ message: String, category: String?, privacy: PrettyLoggerPrivacy) instead")
 @discardableResult
-public func logWarning(_ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
-    return PrettyLogger.shared.logWarning(items, separator: separator, terminator: terminator, file: file, line: line, column: column, function: function)
+public func logWarning(
+    _ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file,
+    line: Int = #line, column: Int = #column, function: String = #function
+) -> String? {
+    return PrettyLogger.shared.logWarningLegacy(
+        items, separator: separator, terminator: terminator, file: file, line: line, column: column,
+        function: function)
 }
 
-@available(*, deprecated, renamed: "info", message: "Use `info` to use the unified OS logger")
+@available(*, deprecated, message: "Use logInfo(_ message: String, category: String?, privacy: PrettyLoggerPrivacy) instead")
 @discardableResult
-public func logInfo(_ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
-    return PrettyLogger.shared.logInfo(items, separator: separator, terminator: terminator, file: file, line: line, column: column, function: function)
+public func logInfo(
+    _ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file,
+    line: Int = #line, column: Int = #column, function: String = #function
+) -> String? {
+    return PrettyLogger.shared.logInfoLegacy(
+        items, separator: separator, terminator: terminator, file: file, line: line, column: column,
+        function: function)
 }
 
-@available(*, deprecated, renamed: "debug", message: "Use `debug` to use the unified OS logger")
+@available(*, deprecated, message: "Use logDebug(_ message: String, category: String?, privacy: PrettyLoggerPrivacy) instead")
 @discardableResult
-public func logDebug(_ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
-    return PrettyLogger.shared.logDebug(items, separator: separator, terminator: terminator, file: file, line: line, column: column, function: function)
+public func logDebug(
+    _ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file,
+    line: Int = #line, column: Int = #column, function: String = #function
+) -> String? {
+    return PrettyLogger.shared.logDebugLegacy(
+        items, separator: separator, terminator: terminator, file: file, line: line, column: column,
+        function: function)
 }
 
-@available(*, deprecated, renamed: "trace", message: "Use `trace` to use the unified OS logger")
+@available(*, deprecated, message: "Use logTrace(_ message: String, category: String?, privacy: PrettyLoggerPrivacy) instead")
 @discardableResult
-public func logTrace(_ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function) -> String? {
-    return PrettyLogger.shared.logTrace(items, separator: separator, terminator: terminator, file: file, line: line, column: column, function: function)
+public func logTrace(
+    _ items: Any..., separator: String? = nil, terminator: String? = nil, file: String = #file,
+    line: Int = #line, column: Int = #column, function: String = #function
+) -> String? {
+    return PrettyLogger.shared.logTraceLegacy(
+        items, separator: separator, terminator: terminator, file: file, line: line, column: column,
+        function: function)
 }

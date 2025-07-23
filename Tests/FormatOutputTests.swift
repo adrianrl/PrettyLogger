@@ -1,8 +1,9 @@
 import XCTest
+
 @testable import PrettyLogger
 
-class FormatOutputTests: XCTestCase {
-    func testOutputWithTwoParameters() {
+class LegacyFormatOutputTests: XCTestCase {
+    func testLegacyOutputWithTwoParameters() {
         PrettyLogger.shared.level = .info
         PrettyLogger.shared.separator = " ❎ "
         let output = logInfo("2", "3")
